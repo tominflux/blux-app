@@ -56,6 +56,4 @@ const runApp = async (options={}) => {
 //////////////
 
 
-import("../src").then(
-    appInstance => runApp(appInstance)
-)
+export default runApp
