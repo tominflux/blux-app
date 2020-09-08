@@ -8,6 +8,10 @@ import Body from './body'
 import { initStore } from './redux/store'
 
 
+///////////
+///////////
+
+
 const runApp = async (options={}) => {
     //Merge with default options
     options = {
@@ -47,4 +51,11 @@ const runApp = async (options={}) => {
     )
 }
 
-export default runApp
+
+//////////////
+//////////////
+
+
+import("../src").then(
+    appInstance => runApp(appInstance)
+)
