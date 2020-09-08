@@ -1,10 +1,10 @@
 {
   "name": "blux-app",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Content-first React Framework",
   "main": "lib/index.js",
   "scripts": {
-    "build": "npx parcel build src/index.jsx -d lib/index.js --target node",
+    "build": "npx parcel build src/index.jsx -d lib --target node",
     "test": "mocha"
   },
   "repository": {
