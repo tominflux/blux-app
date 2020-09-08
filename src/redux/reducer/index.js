@@ -1,4 +1,5 @@
 import { getInitialAppState } from "../initialState"
+import { combineReducers } from "redux"
 
 
 const App = (state=getInitialAppState(), action) => {

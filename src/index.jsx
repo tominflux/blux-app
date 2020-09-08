@@ -31,6 +31,8 @@ const runApp = async (options={}) => {
         options.isCms ?
             options.cmsOverlay : null
     )
+    //Extract components from options.
+    const { header: Header, footer: Footer } = options.components
     //Define App
     const App = () => (
         <Provider store={store}>
