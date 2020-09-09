@@ -1,5 +1,7 @@
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
+import { getPageById } from '../util/pages'
 
 const Body = (props) => {
     //Hooks
@@ -14,10 +16,14 @@ const Body = (props) => {
                 pathname.replace(/^\/|\/$/g, '')
         )
     }
+    const getLoadingPage = () => (
+        <p>Loading...</p>
+    )
     const getCurrentPage = () => {
         const pageId = getPageId()
         const pageProps = getPageById(pageId, pages)
         if (pageProps === null) {
+            const NotFoundPage = () => <p>404</p>
             return (
                 <NotFoundPage />
             )

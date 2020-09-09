@@ -1,7 +1,8 @@
+import "regenerator-runtime/runtime.js"
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
 import { defaultOptions } from './util/options'
 import { setInitialAppState } from './redux/initialState'
 import Body from './body'
@@ -45,11 +46,12 @@ const runApp = async (options={}) => {
         </Provider>
     )
     const rootElement = (
-        document.getElementyById("blux-app")
+        document.getElementById("blux-app")
     )
     //Render App
     ReactDOM.render(
-        App, rootElement
+        <App />, 
+        rootElement
     )
 }
 

@@ -1,23 +1,27 @@
 import { getInitialAppState } from "../initialState"
-import { combineReducers } from "redux"
+import { APP_ACTION_TYPES } from "../actionTypes"
+
+
+///////////
+///////////
 
 
 const App = (state=getInitialAppState(), action) => {
     switch (action.type) {
-        case FETCH_PAGES: 
+        case APP_ACTION_TYPES.FETCH_PAGES: 
             return {
                 ...state,
                 pages: null,
                 requesting: true
             }
-        case RECEIVE_PAGES:
+        case APP_ACTION_TYPES.RECEIVE_PAGES:
             const { receivedPages } = action.payload
             return {
                 ...state,
                 requesting: false,
                 pages: receivedPages
             }
-        case PAGE_ACTION: 
+        case APP_ACTION_TYPES.PAGE_ACTION: 
             const { pageId, pageAction } = action.payload
             const pageState = {}
             const newPageState = PageReducer(pageState, pageAction)
@@ -38,9 +42,4 @@ const App = (state=getInitialAppState(), action) => {
 /////////
 
 
-const compositeReducer = combineReducers({
-    App
-})
-
-
-export default compositeReducer
+export default App

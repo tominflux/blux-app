@@ -5,7 +5,10 @@ export const defaultOptions = {
     //CMS
     isCms: false,
     cmsOverlay: () => null,
+    //Components
+    header: () => null,
+    footer: () => null,
     //Redux
-    reducer: {},
+    reducer: (state) => state,
     preloadedState: {}
 }

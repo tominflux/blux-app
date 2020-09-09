@@ -1,6 +1,6 @@
 {
 	"name": "blux-app",
-	"version": "0.1.10",
+	"version": "0.1.23",
 	"description": "Content-first React Framework",
 	"main": "lib/index.js",
 	"scripts": {
@@ -35,7 +35,8 @@
 		"react-redux": "^7.2.1",
 		"react-router-dom": "^5.2.0",
 		"redux": "^4.0.5",
-		"redux-devtools-extension": "^2.13.8"
+		"redux-devtools-extension": "^2.13.8",
+		"regenerator-runtime": "^0.13.7"
 	},
 	"devDependencies": {
 		"fs-extra": "^9.0.1"

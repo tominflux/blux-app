@@ -16,7 +16,7 @@ export const initStore = (
     const devtools = (
         isDev ?
             composeWithDevTools(applyMiddleware()) :
-            null
+            undefined
     )
     //Create store.
     const store = createStore(
