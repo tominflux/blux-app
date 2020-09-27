@@ -1,6 +1,8 @@
 
-export const APP_ACTION_TYPES = {
+const APP_ACTION_TYPES = {
     FETCH_PAGE: "FETCH_PAGE",
     RECEIVE_PAGE: "RECEIVE_PAGE",
     PAGE_ACTION: "PAGE_ACTION"
 }
+
+export default APP_ACTION_TYPES

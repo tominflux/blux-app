@@ -1,5 +1,5 @@
 import { getInitialAppState } from "../initialState/app"
-import { APP_ACTION_TYPES } from "../actionTypes/app"
+import APP_ACTION_TYPES from "../actionTypes/app"
 
 
 ///////////
