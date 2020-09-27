@@ -39,7 +39,7 @@ const runApp = async (options={}) => {
         <Provider store={store}>
             <BrowserRouter>
                 <Header />
-                <Body />
+                <Body options={options} />
                 <Footer />
                 { getCmsOverlay() }
             </BrowserRouter>

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { getPageById } from '../util/pages'
 
-const Body = (props) => {
+const Body = ({ options }) => {
     //Hooks
     const pages = useSelector(state => state.App.pages)
     const location = useLocation()
@@ -16,17 +16,19 @@ const Body = (props) => {
                 pathname.replace(/^\/|\/$/g, '')
         )
     }
-    const getLoadingPage = () => (
-        <p>Loading...</p>
-    )
+    const getLoadingPage = () => {
+        const LoadingComponent = options.components.loading
+        return <LoadingComponent />
+    }
+    const getNotFoundPage = () => {
+        const NotFoundComponent = options.components.notFound
+        return <NotFoundComponent />
+    }
     const getCurrentPage = () => {
         const pageId = getPageId()
         const pageProps = getPageById(pageId, pages)
         if (pageProps === null) {
-            const NotFoundPage = () => <p>404</p>
-            return (
-                <NotFoundPage />
-            )
+            return getNotFoundPage()
         } else {
             return (<>
                 <Page
