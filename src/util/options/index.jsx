@@ -13,5 +13,5 @@ export const defaultOptions = {
     notFound: () => <p>404</p>,
     //Redux
     reducer: (state) => state,
-    preloadedState: {}
+    preloadedState: {},
 }

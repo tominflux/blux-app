@@ -3,7 +3,7 @@
 
 const defaultInitialAppState = {
     pages: null,
-    requesting: false,
+    isRequesting: false,
     isCms: false
 }
 

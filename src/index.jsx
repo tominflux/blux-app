@@ -13,14 +13,17 @@ import { initStore } from './redux/store'
 ///////////
 
 
-const runApp = async (options={}) => {
+const runApp = async (options={}, preloadedPages=null) => {
     //Merge with default options
     options = {
         ...defaultOptions,
         ...options
     }
     //Set 'isCms' in initial app state.
-    setInitialAppState({ isCms: options.isCms })
+    setInitialAppState({ 
+        isCms: options.isCms,
+        pages: preloadedPages
+    })
     //Create store.
     const store = initStore(
         options.reducer,

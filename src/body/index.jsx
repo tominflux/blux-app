@@ -5,6 +5,7 @@ import { getPageById } from '../util/pages'
 
 const Body = ({ options }) => {
     //Hooks
+    const isRequesting = useSelector(state => state.App.isRequesting)
     const pages = useSelector(state => state.App.pages)
     const location = useLocation()
     //Getters
@@ -27,7 +28,10 @@ const Body = ({ options }) => {
     const getCurrentPage = () => {
         const pageId = getPageId()
         const pageProps = getPageById(pageId, pages)
-        if (pageProps === null) {
+        const pageNotFoundYet = (pageProps === null)
+        if (isRequesting) {
+            return getLoadingPage()
+        } else if (pageNotFoundYet) {
             return getNotFoundPage()
         } else {
             return (<>

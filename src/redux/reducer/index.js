@@ -12,13 +12,13 @@ const App = (state=getInitialAppState(), action) => {
             return {
                 ...state,
                 pages: null,
-                requesting: true
+                isRequesting: true
             }
         case APP_ACTION_TYPES.RECEIVE_PAGES:
             const { receivedPages } = action.payload
             return {
                 ...state,
-                requesting: false,
+                isRequesting: false,
                 pages: receivedPages
             }
         case APP_ACTION_TYPES.PAGE_ACTION: 
