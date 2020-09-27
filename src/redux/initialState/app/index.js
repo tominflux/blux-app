@@ -1,8 +1,7 @@
-
-
+import { Map } from 'immutable'
 
 const defaultInitialAppState = {
-    pages: null,
+    pages: Map(),
     isRequesting: false,
     isCms: false
 }

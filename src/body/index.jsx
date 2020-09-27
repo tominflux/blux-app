@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { getPageById } from '../util/pages'
 
 const Body = ({ options }) => {
     //Hooks
@@ -13,42 +12,31 @@ const Body = ({ options }) => {
         const pathname = location.pathname
         return (
             (pathname === "/") ?
-                "index" : 
+                "index" :
                 pathname.replace(/^\/|\/$/g, '')
         )
     }
-    const getLoadingPage = () => {
-        const LoadingComponent = options.components.loading
-        return <LoadingComponent />
-    }
-    const getNotFoundPage = () => {
-        const NotFoundComponent = options.components.notFound
-        return <NotFoundComponent />
-    }
-    const getCurrentPage = () => {
-        const pageId = getPageId()
-        const pageProps = getPageById(pageId, pages)
-        const pageNotFoundYet = (pageProps === null)
-        if (isRequesting) {
-            return getLoadingPage()
-        } else if (pageNotFoundYet) {
-            return getNotFoundPage()
-        } else {
-            return (<>
-                <Page
-                    {...pageProps}
-                />
-                <AppCmsUi />
-            </>)
-        }
-    }
+    //Effects
+    // - Request Page
+    React.useEffect(() => {
+
+    })
     //Constants
-    const isLoading = (pages === null)
+    const LoadingComponent = options.components.loading
+    const NotFoundComponent = options.components.notFound
+    const pageId = getPageId()
+    const pageProps = pages.get(pageId)
+    const pageNotFoundYet = (pageProps === null)
     //Render
-    if (isLoading) {
-        return getLoadingPage()
+    if (isRequesting) {
+        return <LoadingComponent />
+    } else if (pageNotFoundYet) {
+        return <NotFoundComponent />
     } else {
-        return getCurrentPage()
+        return <>
+            <Page {...pageProps} />
+            <AppCmsUi />
+        </>
     }
 }
 
