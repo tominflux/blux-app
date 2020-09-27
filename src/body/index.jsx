@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
+import { readPage } from '../api/page'
 import APP_ACTIONS from '../redux/actions/app'
 
 const Body = ({ options }) => {
