@@ -23,6 +23,11 @@ const App = (state = getInitialAppState(), action) => {
                 isRequesting: false,
                 pages: pagesWithReceivedPage,
             }
+        case APP_ACTION_TYPES.PAGE_NOT_FOUND:
+            return {
+                ...state,
+                isRequesting: false
+            }
         case APP_ACTION_TYPES.PAGE_ACTION:
             const { pageId, pageAction } = action.payload
             const pageBeforeAction = pages.get(pageId)

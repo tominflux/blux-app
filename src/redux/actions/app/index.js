@@ -11,6 +11,11 @@ const receivePage = (receivedPage) => ({
     payload: { receivedPage }
 })
 
+const pageNotFound = () => ({
+    type: APP_ACTION_TYPES.PAGE_NOT_FOUND,
+    payload: {}
+})
+
 const pageAction = (pageId, pageAction) => ({
     type: APP_ACTION_TYPES.PAGE_ACTION,
     payload: { pageId, pageAction }
@@ -24,6 +29,7 @@ const pageAction = (pageId, pageAction) => ({
 const APP_ACTIONS = {
     fetchPage,
     receivePage,
+    pageNotFound,
     pageAction
 }
 
