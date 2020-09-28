@@ -7,10 +7,16 @@ export const defaultOptions = {
     isCms: false,
     cmsOverlay: () => null,
     //Components
-    header: () => null,
-    footer: () => null,
-    loading: () => <p>Loading...</p>,
-    notFound: () => <p>404</p>,
+    components: {
+        header: () => null,
+        footer: () => null,
+        loading: () => <p>Loading...</p>,
+        notFound: () => <p>404</p>,
+    },
+    //Pages
+    pages: [],
+    //Blocks
+    blocks: [],
     //Redux
     reducer: (state) => state,
     preloadedState: {},

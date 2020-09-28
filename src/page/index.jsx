@@ -1,3 +1,5 @@
+import React from 'react'
+import Block from '../block'
 const { getBlockDispatchers } = require("../block/redux/actions")
 const { getPageDispatchers } = require("./redux/actions")
 
@@ -6,39 +8,65 @@ const { getPageDispatchers } = require("./redux/actions")
 //////////////
 
 
+const pageMap = new Map()
+
+export const registerPages = (pages) => {
+    //Loop through supplied pages.
+    for (const page of pages) {
+        //Ensure page map hasn't already been given page type.
+        if (pageMap.has(page.type)) {
+            throw new Error(
+                `Page type "${page.type}" has ` +
+                `already been registered.`
+            )
+        }
+        //Add page to page map.
+        pageMap.set(page.type, page)
+    }
+}
+
+export const getPageMap = () => (
+    new Map(pageMap)
+)
+
+
+//////////////
+//////////////
+
+
 const Page = (props) => {
-    //Functions
-    const renderBlocks = (blocks) => blocks.map(
+    //Getters
+    const renderBlocks = (blocks) => blocks ? blocks.map(
         (blockProps, index) => {
             const pageId = props.id
             const blockDispatchers = getBlockDispatchers(
-                blockProps, 
+                blockProps,
                 pageId
             )
             return (
-                <Block 
+                <Block
                     key={index}
                     pageId={pageId}
-                    {...blockProps}  
+                    {...blockProps}
                     {...blockDispatchers}
                 />
             )
         }
-    )
+    ) : null
     //Constants
     const pageMap = getPageMap()
     const page = pageMap.get(props.type)
-    if (!pageMap.has(pageType)) {
+    if (!pageMap.has(props.type)) {
         throw new Error(
-            "Page type '" + pageType + "' " + 
+            "Page type '" + props.type + "' " +
             "does not exist."
         )
     }
     const PageComponent = page.component
-    const { 
-        blocks, 
+    const {
+        blocks,
         PageCmsUi,
-        ...pageProps 
+        ...pageProps
     } = props
     const pageDispatchers = getPageDispatchers(page, props.id)
     //Render
@@ -48,11 +76,13 @@ const Page = (props) => {
             {...pageProps}
             {...pageDispatchers}
         >
-            { renderBlocks(blocks) }
-            <PageCmsUi 
+            {renderBlocks(blocks)}
+            {/*
+            <PageCmsUi
                 {...pageProps}
                 {...pageDispatchers}
             />
+            */}
         </PageComponent>
     )
 }

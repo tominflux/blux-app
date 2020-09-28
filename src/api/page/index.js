@@ -1,11 +1,13 @@
 import * as path from 'path'
+import { pageIdToPath } from '../../util/page'
 
 export const PAGE_STATE_API_PATH = '/__state/page'
 
 export const readPage = async (pageId = '/') => {
+    //
+    const pagePath = pageIdToPath(pageId)
     const requestPath = path.join(
-        PAGE_STATE_API_PATH,
-        pageId
+        PAGE_STATE_API_PATH, pagePath
     )
     const response = await fetch(requestPath)
     //404
@@ -17,8 +19,8 @@ export const readPage = async (pageId = '/') => {
     }
     //500
     //Page state response content type is not JSON.
-    const contentType = response.headers["Content-Type"]
-    if (contentType !== "application/json") {
+    const contentType = response.headers.get("Content-Type")
+    if (!contentType.includes("application/json")) {
         const msg = (
             `Unexpected content-type from page state response [${pageId}].\n` +
             `Expected 'application/json', found '${contentType}'.`

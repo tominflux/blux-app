@@ -4,26 +4,32 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { defaultOptions } from './util/options'
-import { setInitialAppState } from './redux/initialState'
+import { setInitialAppState } from './redux/initialState/app'
 import Body from './body'
 import { initStore } from './redux/store'
+import { registerPages } from "./page"
+import { registerBlocks } from "./block"
 
 
 ///////////
 ///////////
 
 
-const runApp = async (options={}, preloadedPages=null) => {
+const runApp = async (options = {}, preloadedPages = null) => {
     //Merge with default options
     options = {
         ...defaultOptions,
         ...options
     }
     //Set 'isCms' in initial app state.
-    setInitialAppState({ 
+    const pagesOverride = preloadedPages ? { preloadedPages } : {}
+    setInitialAppState({
         isCms: options.isCms,
-        pages: preloadedPages
+        ...pagesOverride
     })
+    //Register pages and blocks.
+    registerPages(options.pages)
+    registerBlocks(options.blocks)
     //Create store.
     const store = initStore(
         options.reducer,
@@ -33,7 +39,8 @@ const runApp = async (options={}, preloadedPages=null) => {
     //Getters
     const getCmsOverlay = () => (
         options.isCms ?
-            options.cmsOverlay : null
+            (options.cmsOverlay ? options.cmsOverlay : null) :
+            null
     )
     //Extract components from options.
     const { header: Header, footer: Footer } = options.components
@@ -44,7 +51,7 @@ const runApp = async (options={}, preloadedPages=null) => {
                 <Header />
                 <Body options={options} />
                 <Footer />
-                { getCmsOverlay() }
+                {getCmsOverlay()}
             </BrowserRouter>
         </Provider>
     )
@@ -53,7 +60,7 @@ const runApp = async (options={}, preloadedPages=null) => {
     )
     //Render App
     ReactDOM.render(
-        <App />, 
+        <App />,
         rootElement
     )
 }
