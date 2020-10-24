@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import './styles.css'
 // import { createBlockAction } from './redux/actions'
 
@@ -12,6 +13,12 @@ const blockMap = new Map()
 export const registerBlocks = (blocks) => {
     //Loop through supplied blocks.
     for (const block of blocks) {
+        //Ensure block has a type.
+        if (!block.type) {
+            throw new Error(
+                `Block type cannot be falsey. block.type = ${block.type}`
+            )
+        }
         //Ensure block map hasn't already been given block type.
         if (blockMap.has(block.type)) {
             throw new Error(

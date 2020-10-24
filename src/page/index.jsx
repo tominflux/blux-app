@@ -1,7 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Block from '../block'
-const { getBlockDispatchers } = require("../block/redux/actions")
-const { getPageDispatchers } = require("./redux/actions")
+import { getBlockDispatchers } from '../block/redux/actions'
+import { getPageDispatchers } from './redux/actions'
+import { useDispatch } from 'react-redux'
 
 
 //////////////
@@ -11,22 +13,22 @@ const { getPageDispatchers } = require("./redux/actions")
 const pageMap = new Map()
 
 export const registerPages = (pages) => {
-    //Loop through supplied pages.
-    for (const page of pages) {
-        //Ensure page map hasn't already been given page type.
-        if (pageMap.has(page.type)) {
-            throw new Error(
-                `Page type "${page.type}" has ` +
-                `already been registered.`
-            )
-        }
-        //Add page to page map.
-        pageMap.set(page.type, page)
-    }
+	//Loop through supplied pages.
+	for (const page of pages) {
+		//Ensure page map hasn't already been given page type.
+		if (pageMap.has(page.type)) {
+			throw new Error(
+				`Page type "${page.type}" has ` +
+                'already been registered.'
+			)
+		}
+		//Add page to page map.
+		pageMap.set(page.type, page)
+	}
 }
 
 export const getPageMap = () => (
-    new Map(pageMap)
+	new Map(pageMap)
 )
 
 
@@ -34,57 +36,67 @@ export const getPageMap = () => (
 //////////////
 
 
-const Page = (props) => {
-    //Getters
-    const renderBlocks = (blocks) => blocks ? blocks.map(
-        (blockProps, index) => {
-            const pageId = props.id
-            const blockDispatchers = getBlockDispatchers(
-                blockProps,
-                pageId
-            )
-            return (
-                <Block
-                    key={index}
-                    pageId={pageId}
-                    {...blockProps}
-                    {...blockDispatchers}
-                />
-            )
-        }
-    ) : null
-    //Constants
-    const pageMap = getPageMap()
-    const page = pageMap.get(props.type)
-    if (!pageMap.has(props.type)) {
-        throw new Error(
-            "Page type '" + props.type + "' " +
-            "does not exist."
-        )
-    }
-    const PageComponent = page.component
-    const {
-        blocks,
-        PageCmsUi,
-        ...pageProps
-    } = props
-    const pageDispatchers = getPageDispatchers(page, props.id)
-    //Render
-    return (
-        <PageComponent
-            className={props.className}
-            {...pageProps}
-            {...pageDispatchers}
-        >
-            {renderBlocks(blocks)}
-            {/*
+// eslint-disable-next-line no-unused-vars
+const Page = ({ id, type, className, blocks, PageCmsUi, ...pageProps }) => {
+	// Redux
+	const dispatch = useDispatch()
+	// Getters
+	const renderBlocks = (blocks) => blocks ? blocks.map(
+		(blockProps, index) => {
+			const pageId = id
+			const blockDispatchers = getBlockDispatchers(
+				blockProps,
+				pageId
+			)
+			return (
+				<Block
+					key={index}
+					pageId={pageId}
+					{...blockProps}
+					{...blockDispatchers}
+				/>
+			)
+		}
+	) : null
+	// Constants
+	const pageMap = getPageMap()
+	const page = pageMap.get(type)
+	if (!pageMap.has(type)) {
+		throw new Error(
+			'Page type \'' + type + '\' ' +
+            'does not exist.'
+		)
+	}
+	const PageComponent = page.component
+	const pageDispatchers = getPageDispatchers(page, id, dispatch)
+	//Render
+	return (
+		<PageComponent
+			className={className}
+			{...pageProps}
+			{...pageDispatchers}
+		>
+			{renderBlocks(blocks)}
+			{/*
             <PageCmsUi
                 {...pageProps}
                 {...pageDispatchers}
             />
             */}
-        </PageComponent>
-    )
+		</PageComponent>
+	)
+}
+
+Page.propTypes = {
+	id: PropTypes.string.isRequired,
+	type: PropTypes.string.isRequired,
+	className: PropTypes.string,
+	PageCmsUi: PropTypes.func,
+	blocks: PropTypes.arrayOf(PropTypes.object)
+}
+
+Page.defaultProps = {
+	className: null
 }
 
 export default Page

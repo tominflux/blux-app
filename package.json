@@ -31,6 +31,7 @@
 	"homepage": "https://github.com/tominflux/blux-app#readme",
 	"dependencies": {
 		"immutable": "^4.0.0-rc.12",
+		"prop-types": "^15.7.2",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-redux": "^7.2.1",
@@ -41,6 +42,8 @@
 	},
 	"devDependencies": {
 		"cssnano": "^4.1.10",
+		"eslint": "^7.12.0",
+		"eslint-plugin-react": "^7.21.5",
 		"fs-extra": "^9.0.1"
 	}
 }
