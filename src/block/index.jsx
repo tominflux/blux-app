@@ -1,6 +1,6 @@
 import React from 'react'
 import './styles.css'
-import { createBlockAction } from './redux/actions'
+// import { createBlockAction } from './redux/actions'
 
 
 //////////////
@@ -34,6 +34,9 @@ export const getBlockMap = () => (
 
 
 const Block = (props) => {
+    // Redux
+    const { isCms } = useSelector((state) => state.App)
+    // Computations
     const blockMap = getBlockMap()
     if (!blockMap.has(props.type)) {
         console.error(
@@ -46,10 +49,12 @@ const Block = (props) => {
         )
     }
     const block = blockMap.get(props.type)
-    const BlockComponent = block.component
-    return <>
+    const BlockComponent = isCms ?
+        block.component.cms : block.component.public
+    // Render
+    return (<>
         <BlockComponent {...props} />
-    </>
+    </>)
 }
 
 export default Block
