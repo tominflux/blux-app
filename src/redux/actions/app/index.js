@@ -1,6 +1,5 @@
 import APP_ACTION_TYPES from '../../actionTypes/app'
 
-
 const fetchPage = () => ({
 	type: APP_ACTION_TYPES.FETCH_PAGE,
 	payload: {}
@@ -20,11 +19,6 @@ const pageAction = (pageId, pageAction) => ({
 	type: APP_ACTION_TYPES.PAGE_ACTION,
 	payload: { pageId, pageAction }
 })
-
-
-////////////
-////////////
-
 
 const APP_ACTIONS = {
 	fetchPage,

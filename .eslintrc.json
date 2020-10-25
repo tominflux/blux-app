@@ -33,6 +33,10 @@
         "semi": [
             "error",
             "never"
-        ]
+        ],
+        "eol-last": "error",
+        "prefer-arrow-callback": "error",
+        "default-case": "error",
+        "spaced-comment": "warn"
     }
 }

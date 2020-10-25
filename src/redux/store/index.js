@@ -7,7 +7,7 @@ export const initStore = (
 	preloadedState = null,
 	isDev = false
 ) => {
-	//Combine reducers.
+	// Combine reducers.
 	const compositeReducer = combineReducers({
 		App,
 		...externalReducers
@@ -18,7 +18,7 @@ export const initStore = (
 			composeWithDevTools(applyMiddleware()) :
 			undefined
 	)
-	//Create store.
+	// Create store.
 	const store = createStore(
 		compositeReducer,
 		preloadedState,

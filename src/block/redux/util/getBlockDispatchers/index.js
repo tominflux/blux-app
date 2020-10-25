@@ -1,7 +1,6 @@
-import { getBlockMap } from '../..'
-import PAGE_ACTION_TYPES from '../../../page/redux/actionTypes'
-import APP_ACTION_TYPES from '../../../redux/actionTypes/app'
-
+import { getBlockMap } from '../../..'
+import PAGE_ACTION_TYPES from '../../../../page/redux/actionTypes'
+import APP_ACTION_TYPES from '../../../../redux/actionTypes/app'
 
 /**
  * Creates an absolute action from a block action.
@@ -35,27 +34,27 @@ const actualiseBlockAction = (
  * @param {*} blockProps 
  * @param {*} pageId 
  */
-export const getBlockDispatchers = (dispatch, blockProps, pageId) => {
-	//Get block and block actions from block-map.
+const getBlockDispatchers = (dispatch, blockProps, pageId) => {
+	// Get block and block actions from block-map.
 	const blockMap = getBlockMap()
-	//...but first ensure block type exists.
+	// ...but first ensure block type exists.
 	if (!blockMap.has(blockProps.type)) {
 		throw new Error(
 			`Unrecognised block type '${blockProps.type}'.`
 		)
 	}
 	const block = blockMap.get(blockProps.type)
-	//If block has no redux behaviour, return empty object.
+	// If block has no redux behaviour, return empty object.
 	if (!block.redux) return {}
 	//
 	const blockActionFns = block.redux.actions
-	//Build object with block's dispatchers by
-	//looping through keys of block actions...
+	// Build object with block's dispatchers by
+	// looping through keys of block actions...
 	let blockDispatchers = {}
 	for (const key in blockActionFns) {
-		//Extract block action.
+		// Extract block action.
 		const blockActionFn = blockActionFns[key]
-		//Build dispatcher from action.
+		// Build dispatcher from action.
 		const blockDispatcher = (...params) => {
 			const blockAction = blockActionFn(...params)
 			const action = actualiseBlockAction(
@@ -68,6 +67,8 @@ export const getBlockDispatchers = (dispatch, blockProps, pageId) => {
 			[key]: blockDispatcher
 		}
 	}
-	//Return copy.
+	// Return copy.
 	return { ...blockDispatchers }
 }
+
+export default getBlockDispatchers

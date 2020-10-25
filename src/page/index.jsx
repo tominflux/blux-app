@@ -1,28 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Block from '../block'
-import { getBlockDispatchers } from '../block/redux/actions'
-import { getPageDispatchers } from './redux/actions'
+import getBlockDispatchers from '../block/redux/util/getBlockDispatchers'
+import getPageDispatchers from './redux/util/getPageDispatchers'
 import { useDispatch } from 'react-redux'
-
-
-//////////////
-//////////////
-
 
 const pageMap = new Map()
 
 export const registerPages = (pages) => {
-	//Loop through supplied pages.
+	// Loop through supplied pages.
 	for (const page of pages) {
-		//Ensure page map hasn't already been given page type.
+		// Ensure page map hasn't already been given page type.
 		if (pageMap.has(page.type)) {
 			throw new Error(
 				`Page type "${page.type}" has ` +
                 'already been registered.'
 			)
 		}
-		//Add page to page map.
+		// Add page to page map.
 		pageMap.set(page.type, page)
 	}
 }
@@ -31,20 +26,25 @@ export const getPageMap = () => (
 	new Map(pageMap)
 )
 
-
-//////////////
-//////////////
-
+export const getPage = (type) => {
+	if (!pageMap.has(type)) {
+		throw new Error(
+			`Page type '${type}' does not exist.`
+		)
+	}
+	return pageMap.get(type)
+}
 
 // eslint-disable-next-line no-unused-vars
 const Page = ({ id, type, className, blocks, PageCmsUi, ...pageProps }) => {
 	// Redux
 	const dispatch = useDispatch()
 	// Getters
-	const renderBlocks = (blocks) => blocks ? blocks.map(
+	const renderBlocks = (blocks) => blocks.valueSeq().map(
 		(blockProps, index) => {
 			const pageId = id
 			const blockDispatchers = getBlockDispatchers(
+				dispatch,
 				blockProps,
 				pageId
 			)
@@ -57,7 +57,7 @@ const Page = ({ id, type, className, blocks, PageCmsUi, ...pageProps }) => {
 				/>
 			)
 		}
-	) : null
+	)
 	// Constants
 	const pageMap = getPageMap()
 	const page = pageMap.get(type)
@@ -68,8 +68,8 @@ const Page = ({ id, type, className, blocks, PageCmsUi, ...pageProps }) => {
 		)
 	}
 	const PageComponent = page.component
-	const pageDispatchers = getPageDispatchers(page, id, dispatch)
-	//Render
+	const pageDispatchers = getPageDispatchers(dispatch, page, id)
+	// Render
 	return (
 		<PageComponent
 			className={className}

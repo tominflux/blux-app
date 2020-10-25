@@ -1,10 +1,6 @@
 import { getInitialAppState } from '../../initialState/app'
 import APP_ACTION_TYPES from '../../actionTypes/app'
-
-
-///////////
-///////////
-
+import PageReducer from '../../../page/redux/reducer'
 
 const App = (state = getInitialAppState(), action) => {
 	switch (action.type) {
@@ -42,14 +38,8 @@ const App = (state = getInitialAppState(), action) => {
 			pages: pagesAfterAction
 		}
 	}
-	default:
-		return state
+	default: return state
 	}
 }
-
-
-/////////
-/////////
-
 
 export default App
