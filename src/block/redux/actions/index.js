@@ -12,7 +12,7 @@ import APP_ACTION_TYPES from '../../../redux/actionTypes/app'
  * @param {*} blockId 
  * @param {*} blockAction 
  */
-export const actualiseBlockAction = (
+const actualiseBlockAction = (
 	pageId,
 	blockId,
 	blockAction

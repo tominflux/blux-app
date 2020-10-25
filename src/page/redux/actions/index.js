@@ -1,4 +1,13 @@
+import APP_ACTION_TYPES from '../../../redux/actionTypes/app'
 
+
+const actualisePageAction = (pageId, pageAction) => ({
+	type: APP_ACTION_TYPES.PAGE_ACTION,
+	payload: {
+		pageId,
+		pageAction
+	}
+})
 
 export const getPageDispatchers = (page, pageId, dispatch) => {
 	//If page has no redux behaviour...
@@ -17,9 +26,7 @@ export const getPageDispatchers = (page, pageId, dispatch) => {
 		//Build dispatcher from action.
 		const pageDispatcher = (...params) => {
 			const pageAction = pageActionFn(...params)
-			const action = createActionFromPageAction(
-				pageId, pageAction
-			)
+			const action = actualisePageAction(pageId, pageAction)
 			dispatch(action)
 		}
 		pageDispatchers = {
