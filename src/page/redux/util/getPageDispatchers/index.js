@@ -10,7 +10,7 @@ const actualisePageAction = (pageId, pageAction) => ({
 
 const getPageDispatchers = (dispatch, page, pageId) => {
 	// If page has no redux behaviour...
-	if (!page.redux) {
+	if (!page.cms.redux) {
 		// Return no dispatchers.
 		return { }
 	}

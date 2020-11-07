@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
 import './styles.css'
 // import { createBlockAction } from './redux/actions'
 
@@ -11,7 +10,7 @@ import './styles.css'
 
 const blockMap = new Map()
 
-export const registerBlocks = (blocks) => {
+export const registerBlocks = async (blocks, isCms) => {
 	// Loop through supplied blocks.
 	for (const block of blocks) {
 		// Ensure block has a type.
@@ -27,8 +26,23 @@ export const registerBlocks = (blocks) => {
                 'already been registered.'
 			)
 		}
+		// Load block modules
+		const blockPublic = isCms ? null : (await block.public()).default
+		const blockCms = isCms ? (await block.cms()).default : null
+		const blockCommon = (await block.common()).default
+		// Build loaded block.
+		const loadedBlock = {
+			type: block.type,
+			component: isCms ? blockCms.component : blockPublic.component,
+			redux: isCms ? (blockCms.redux ?? null) : null,
+			metadata: {
+				...(isCms ? (blockCms.metadata ?? {}) : {}),
+				...(blockCommon.metadata ?? {}),
+			},
+			deserialise: blockCommon.deserialise ?? null
+		}
 		// Add block to block map.
-		blockMap.set(block.type, block)
+		blockMap.set(block.type, loadedBlock)
 	}
 }
 
@@ -46,8 +60,6 @@ export const getBlock = (type) => {
 }
 
 const Block = ({type, ...otherProps}) => {
-	// Redux
-	const { isCms } = useSelector((state) => state.App)
 	// Computations
 	const blockMap = getBlockMap()
 	if (!blockMap.has(type)) {
@@ -61,8 +73,9 @@ const Block = ({type, ...otherProps}) => {
 		)
 	}
 	const block = blockMap.get(type)
-	const BlockComponent = isCms ?
-		block.component.cms : block.component.public
+	console.log(block)
+	const BlockComponent = block.component
+	console.log('otherProps', {...otherProps})
 	// Render
 	return (<>
 		<BlockComponent {...otherProps} />

@@ -23,8 +23,8 @@ const runApp = async (options = {}, preloadedPages = null) => {
 		...pagesOverride
 	})
 	// Register pages and blocks.
-	registerPages(options.pages)
-	registerBlocks(options.blocks)
+	await registerPages(options.pages, options.isCms)
+	await registerBlocks(options.blocks, options.isCms)
 	// Create store.
 	const store = initStore(
 		options.reducer,
