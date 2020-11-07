@@ -3,11 +3,6 @@ import PropTypes from 'prop-types'
 import './styles.css'
 // import { createBlockAction } from './redux/actions'
 
-
-// ////////////
-// ////////////
-
-
 const blockMap = new Map()
 
 export const registerBlocks = async (blocks, isCms) => {

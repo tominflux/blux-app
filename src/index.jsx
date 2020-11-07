@@ -10,7 +10,7 @@ import { initStore } from './redux/store'
 import { registerPages } from './page'
 import { registerBlocks } from './block'
 
-const runApp = async (options = {}, preloadedPages = null) => {
+const runApp = async (options = {}, isCms = false, preloadedPages = null) => {
 	// Merge with default options
 	options = {
 		...defaultOptions,
@@ -19,12 +19,12 @@ const runApp = async (options = {}, preloadedPages = null) => {
 	// Set 'isCms' in initial app state.
 	const pagesOverride = preloadedPages ? { preloadedPages } : {}
 	setInitialAppState({
-		isCms: options.isCms,
+		isCms: isCms,
 		...pagesOverride
 	})
 	// Register pages and blocks.
-	await registerPages(options.pages, options.isCms)
-	await registerBlocks(options.blocks, options.isCms)
+	await registerPages(options.pages, isCms)
+	await registerBlocks(options.blocks, isCms)
 	// Create store.
 	const store = initStore(
 		options.reducer,
@@ -33,7 +33,7 @@ const runApp = async (options = {}, preloadedPages = null) => {
 	)
 	// Getters
 	const getCmsOverlay = () => (
-		options.isCms ?
+		isCms ?
 			(options.cmsOverlay ? options.cmsOverlay : null) :
 			null
 	)
