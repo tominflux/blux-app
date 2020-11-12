@@ -6,7 +6,7 @@ import APP_ACTIONS from '../redux/actions/app'
 import Page from '../page'
 import deserialisePage from '../page/util/deserialise'
 
-const Body = ({ options }) => {
+const Body = ({ options, CmsUi }) => {
 	// Hooks
 	const dispatch = useDispatch()
 	const isRequesting = useSelector(state => state.App.isRequesting)
@@ -20,6 +20,7 @@ const Body = ({ options }) => {
 	const pageId = getPageId()
 	const pageProps = pages.get(pageId)
 	const pageReceived = pages.has(pageId)
+	console.log('cms-ui', CmsUi)
 	// Effects
 	// - Request Page
 	React.useEffect(() => {
@@ -52,7 +53,7 @@ const Body = ({ options }) => {
 	} else {
 		return <>
 			<Page {...pageProps} />
-			{/* <AppCmsUi />*/}
+			<CmsUi />
 		</>
 	}
 }

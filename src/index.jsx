@@ -25,6 +25,9 @@ const runApp = async (options = {}, isCms = false, preloadedPages = null) => {
 	// Register pages and blocks.
 	await registerPages(options.pages, isCms)
 	await registerBlocks(options.blocks, isCms)
+	// Dynamically import CMS module
+	const cms = isCms ? (await options.cms()).default : null
+	console.log(cms)
 	// Create store.
 	const store = initStore(
 		options.reducer,
@@ -44,7 +47,10 @@ const runApp = async (options = {}, isCms = false, preloadedPages = null) => {
 		<Provider store={store}>
 			<BrowserRouter>
 				<Header />
-				<Body options={options} />
+				<Body 
+					options={options} 
+					CmsUi={cms.components.CmsUi}
+				/>
 				<Footer />
 				{getCmsOverlay()}
 			</BrowserRouter>

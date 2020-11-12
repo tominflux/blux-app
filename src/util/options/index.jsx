@@ -4,7 +4,7 @@ export const defaultOptions = {
 	// Is Development Instance?
 	isDev: false,
 	// CMS
-	cmsOverlay: () => null,
+	cms: () => null,
 	// Components
 	components: {
 		header: () => null,
