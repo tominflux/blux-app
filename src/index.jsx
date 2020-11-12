@@ -10,7 +10,7 @@ import { initStore } from './redux/store'
 import { registerPages } from './page'
 import { registerBlocks } from './block'
 
-const runApp = async (options = {}, isCms = false, preloadedPages = null) => {
+const runBluxApp = async (options = {}, isCms = false, preloadedPages = null) => {
 	// Merge with default options
 	options = {
 		...defaultOptions,
@@ -27,7 +27,6 @@ const runApp = async (options = {}, isCms = false, preloadedPages = null) => {
 	await registerBlocks(options.blocks, isCms)
 	// Dynamically import CMS module
 	const cms = isCms ? (await options.cms()).default : null
-	console.log(cms)
 	// Create store.
 	const store = initStore(
 		options.reducer,
@@ -66,4 +65,4 @@ const runApp = async (options = {}, isCms = false, preloadedPages = null) => {
 	)
 }
 
-export default runApp
+export default runBluxApp

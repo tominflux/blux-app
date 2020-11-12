@@ -8,7 +8,8 @@
 		"dev": "npx parcel watch src/index.jsx -d lib",
 		"dev-build": "npx parcel build src/index.jsx -d lib --no-minify",
 		"build": "npx parcel build src/index.jsx -d lib",
-		"test": "mocha"
+		"test": "mocha",
+		"src-map": "source-map-explorer lib/index.js lib/index.js.map"
 	},
 	"repository": {
 		"type": "git",
@@ -48,6 +49,12 @@
 		"eslint-plugin-react": "^7.21.5",
 		"fs-extra": "^9.0.1",
 		"marked": "^1.2.2",
-		"nodemon": "^2.0.6"
-	}
+		"nodemon": "^2.0.6",
+		"parcel-bundler": "^1.12.4",
+		"parcel-plugin-externals": "^0.5.1",
+		"source-map-explorer": "^2.5.0"
+	},
+	"externals": [
+		"react => React"
+	]
 }
